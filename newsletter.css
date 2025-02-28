@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #2C2E3A;
+    font-family: "Roboto", serif;
+    margin: 0;
+}
+.container {
+    display: flex;
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 800px;
+    height: 400px;
+}
+.content {
+    padding: 20px 30px 20px 20px;
+    max-width: 400px; 
+}
+.content h2 {
+    margin: 0 0 10px;
+}
+.content p {
+    font-size: 14px;
+    color: #555;
+    
+}
+.content ul {
+    padding: 0;
+    list-style: none;
+}
+.content ul li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.content ul li::before {
+    content: '\2714';
+    background:#ff3b3b ;
+    color:#fff;
+    margin-right: 10px;
+    height: 22px;
+    width: 22px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.form-group {
+    margin-top: 15px;
+}
+#email{
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 10px ;
+}
+.form-group a{
+    position:absolute;
+    left: 43%;
+    top: 55%;
+    visibility: hidden;
+     
+}
+.form-group-erro input{
+    border-color: #f10909;
+}
+.form-group-erro a{
+    color: #f10909;
+    visibility: visible;
+}
+
+button[type="submit"] {
+    width: 100%;
+    background: linear-gradient(to right, #FF4E60, #FF7C4E);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.image-section {
+    flex: 1;
+    background: url("newsletter-sign-up-with-success-message-main/assets/images/illustration-sign-up-desktop.svg") no-repeat center;
+    background-size: cover;
+    border-radius: 8px;
+}
