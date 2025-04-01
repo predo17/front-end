@@ -36,9 +36,11 @@ function checkInputpassword(){
         const formItem = password.parentElement;
         formItem.className = "input-box"
     }
+
+    console.log(passwordValue)
 }
 
-function checkForm(){
+function checkForm() {
     checkInputEmail();
     checkInputpassword();
 
@@ -49,9 +51,10 @@ function checkForm(){
 
     if(isValid){
         alert("CADASTRADO COM SUCESSO!")
+
     }
 
-    console.log(isValid)
+    
 }
 
 function erroInput(input, message){

@@ -19,13 +19,14 @@ body{
 
 .container{
     width: 420px;
-    background-color: transparent;
+    background-color: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(3px);
     border: 2px solid rgba(255, 255, 255, .2);
     border-radius: 10px;
     box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
     padding: 30px 40px;
     color: aliceblue;
+    animation: up 2s ease-in-out;
 
 }
 
@@ -156,6 +157,6 @@ button:hover{
 @media(max-width: 1024px) {
     .container {
         backdrop-filter: none; 
-        background-color: rgba(0, 0, 0, 0.2); 
+        background-color: rgba(0, 0, 0, 0.3); 
     }
 }
