@@ -12,16 +12,16 @@ body{
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-image: url(/image/Fond\ d\écran\ 4k.jfif);
+    background:#000 url(https://img.freepik.com/fotos-gratis/noite-natureza-paisagem-galaxia-montanha-agua-estrela-beleza-generativa-ai_188544-9736.jpg?t=st=1744289598~exp=1744293198~hmac=451911baeea81a97528db0492c8fcf97bf0405eaac725bece0b803513fefd990&w=1060) no-repeat center;
     background-size: cover;
-    background-position: center;
+    overflow: hidden;
 }
 
 .container{
     width: 420px;
     background-color: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(3px);
-    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 10px;
     box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
     padding: 30px 40px;
@@ -30,7 +30,18 @@ body{
 
 }
 
-.container h1{
+@keyframes up {
+    0%{
+        transform: translateY(190px);
+        opacity: 0;
+    }
+    100%{
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+#form-title {
     text-align: center;
     font-size: 36px;
 }
@@ -60,6 +71,8 @@ body{
 }
 
 .input-box i{
+    color: #fff;
+    cursor: pointer;
     position: absolute;
     right: 20px;
     top: 50%;
@@ -67,44 +80,15 @@ body{
     font-size: 20px;
 }
 
-.input-box a {
-    padding: 5px 20px;
-    visibility: hidden;
-}
-
-.input-box.error input{
-    border-color: red;
-}
-
-.input-box.error a{
-    color: red;
-    visibility: visible;
-}
-
-.pass-box{
-    font-size: 12px;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-}
-
-.pass-box label input{
-    margin-right: 5px;
+.input-box p{
     cursor: pointer;
 }
 
-.pass-box a{
-    color: aliceblue;
-    text-decoration: none;
-    
+.senha-actions{
+    display: flex; 
+    justify-content: space-between;
+    padding: 5px 0.2rem ;
 }
-
-.pass-box a:hover{
-    color: #807ef8;
-    text-decoration: underline;
-}
-
-
 
 button{
     width: 100%;
@@ -112,9 +96,10 @@ button{
     font-size: 18px;
     font-weight: 500;
     border-radius: 40px;
+    margin-top: 10px;
     border: none;
     cursor: pointer;
-    transition: 0.5s;
+    transition: 0.5s ease-in-out;
 }
 
 button:hover{
@@ -129,16 +114,6 @@ button:hover{
     text-align: center;
 }
 
-.cadastrar a{
-    color: aliceblue;
-    text-decoration: none;
-}
-
-.cadastrar a:hover{
-    color: #807ef8;
-    text-decoration: underline;
-}
-
 .input-box input:-webkit-autofill {
     background-color: rgba(255, 255, 255, 0.1) !important;
     color: aliceblue !important;
@@ -146,6 +121,24 @@ button:hover{
     -webkit-text-fill-color: aliceblue !important; 
     transition: background-color 5000s ease-in-out 0s; 
 }
+
+.mensagem {
+    text-align: center;
+    margin-top: 10px;
+}
+  
+.oculto {
+    display: none;
+}
+
+.visivel {
+    display: block;
+    color: #00ff88;
+    font-size: 1.2em;
+    text-align: center;
+    margin-top: 20px;
+}
+   
 
 @media (prefers-color-scheme: dark) {
     .input-box input {
@@ -155,8 +148,14 @@ button:hover{
 }
 
 @media(max-width: 1024px) {
+
+    body{
+        padding: 4% 0.5rem;
+    }
+
     .container {
         backdrop-filter: none; 
         background-color: rgba(0, 0, 0, 0.3); 
     }
 }
+
