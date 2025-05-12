@@ -16,16 +16,30 @@ const resetScores = document.getElementById('resetscores')
 
 regrasBtn.addEventListener('click', () => {
   regrasBox.style.display = 'block';
-});
-dadosBtn.addEventListener('click', () => {
-  dadosBox.style.display = 'block';
+  setTimeout(() => {
+    regrasBox.classList.add('show');
+  }, 10);
 });
 
 fecharRegrasBtn.addEventListener('click', () => {
-  regrasBox.style.display = 'none';
+  regrasBox.classList.remove('show');
+  setTimeout(() => {
+    regrasBox.style.display = 'none';
+  }, 500);
 });
+
+dadosBtn.addEventListener('click', () => {
+  dadosBox.style.display = 'block';
+  setTimeout(() => {
+    dadosBox.classList.add('show');
+  }, 10);
+});
+
 fecharDadoaBtn.addEventListener('click', () => {
-  dadosBox.style.display = 'none';
+  dadosBox.classList.remove('show');
+  setTimeout(() => {
+    dadosBox.style.display = 'none';
+  }, 500);
 });
 
 const imagens = [

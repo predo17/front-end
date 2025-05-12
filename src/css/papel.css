@@ -17,6 +17,7 @@ body{
     max-width: 1000px;
     height: 100vh;
     padding: 3rem 0.5rem;
+    overflow: hidden;
 }
 
 .container-game{
@@ -232,25 +233,45 @@ h3{
     }
 }
 
-.rules-box{
+
+.rules-box {
     position: absolute;
     background-color: #0b0d147a;
     border-radius: 8px;
     display: none;
+    opacity: 0;
+    transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
-.rules-box.left{
+
+.rules-box.left {
     top: 53%;
     left: 0.5%;
     padding: 30px;
-    animation: ruleLeft .5s ease-in-out;
+    transform: translateX(-100%);
 }
 
-.score{
+
+.rules-box.right {
+    top: 36.5%;
+    right: 0.5%;
+    padding: 30px;
+    transform: translateX(100%);
+}
+
+
+.rules-box.show {
+    display: block;
+    transform: translateX(0);
+    opacity: 1;
+}
+
+
+.score {
     padding: 10px 20px;
 }
 
-.rules-box.left button{
+.rules-box.left button {
     width: 100%;
     border: none;
     border-radius: 3px;
@@ -258,22 +279,16 @@ h3{
     cursor: pointer;
 }
 
-.rules-box.rigth{
-    top: 36.500%;
-    right: 0.5%;
-    padding: 30px;
-}
-
-.rules-box.rigth ul{
+.rules-box.right ul {
     padding: 10px 20px;
 }
 
-.rules-box.left .score-texto i{
+.rules-box.left .score-texto i {
     padding: 0px 10px 0px 0px;
     cursor: pointer;
 }
 
-.rules-box.rigth .score-texto i{
+.rules-box.right .score-texto i {
     padding: 0px 0px 0px 20px;
     cursor: pointer;
 }
