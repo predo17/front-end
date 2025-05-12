@@ -11,7 +11,8 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    overflow: hidden;
+   
 }
 
 .container{
@@ -19,9 +20,8 @@ body{
     grid-template-columns: repeat(4, 230px);
     grid-template-rows: repeat(3, 240px);
     grid-gap: 23px;
-    max-width: 1200px;
-    max-height: 768px;
-    overflow: hidden;
+    max-width: 1100px;
+    padding: 0.1rem;
 }
 
 .item{
@@ -231,20 +231,20 @@ body{
     width: 190px;
     height: 200px;
 }
-@media (max-width: 986px) {
+@media (max-width: 768px) {
     body {
         height: 100vh;  
         padding: 20px;
+        overflow: scroll;
     }
 
     .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        max-width: 100%;
-        max-height: 1200px;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(9, 240px);
+        max-width: 400px;
         height: 100%;
         grid-gap: 15px;
+        padding: 2rem 0;
     }
 
     .item {
@@ -255,43 +255,56 @@ body{
     }
 
     .item:nth-child(1) {
-        width: 100%;
-        height: 100%;
-        padding: 40px 20px;
+        grid-column: 1 ;
+        grid-row: 1; 
     }
 
-    .item:nth-child(2),
-    .item:nth-child(3) {
+    .item:nth-child(2){
+        grid-column: 1 ;
+        grid-row: 2;
         width: 100%;
-        height: 160%;
+    }
+
+    .item:nth-child(3){
+        grid-column: 1;
+        grid-row: 3;
+        width: 100%;
+        z-index: 1;
     }
 
     .item:nth-child(4) {
-        width: 100%;
-        height: 380%;
+        grid-column: 1 ;
+        grid-row: 4;
+        z-index: 1;
     }
 
     .item:nth-child(5) {
-        width: 100%;
-        height: 260%;
+        grid-column: 1;
+        grid-row: 5;
     }
 
     .item:nth-child(6) {
+        grid-column: 1 ;
+        grid-row: 6;
         width: 100%;
-        height: 160%;
     }
 
     .item:nth-child(7) {
+        grid-column: 1 ;
+        grid-row: 7;
         width: 100%;
-        height: 200%;
+        height: auto;
     }
 
     .item:nth-child(8) {
+        grid-column: 1 ;
+        grid-row: 8;
+        align-self: auto;
+        justify-self: auto;
         width: 100%;
-        height: 320%;
     }
 
-    /* Ajustes nos textos para evitar cortes */
+    
     h2 {
         font-size: 22px;
         word-wrap: break-word;
@@ -304,25 +317,13 @@ body{
         font-size: 32px;
     }
 
-    /* Ajuste de imagens */
-    .cont2-img img,
-    .cont3-img img,
-    .cont5-img img,
-    .cont6-img img,
-    .cont7-img img,
-    .cont8-img img {
-        width: 100%;
-        height: auto;
-        object-fit: contain;
-    }
-
     .cont-post img {
         height: auto;
         width: 100%;
         padding: 10px 0;
     }
 
-    /* Ajuste para melhor organização de textos */
+   
     .cont-item5 {
         flex-direction: column;
         text-align: center;
