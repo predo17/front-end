@@ -85,7 +85,7 @@ function processLogin() {
 document.getElementById("gerar-senha").addEventListener("click", () => {
   const novaSenha = gerarSenhaForte(12);
   password.value = novaSenha;
-  avaliarForcaSenha(novaSenha);
+  avaliarForcaSenha(novaSenha);//Funcionando, tá bom.
 });
 
 function gerarSenhaForte(tamanho) {
@@ -105,62 +105,30 @@ function gerarSenhaForte(tamanho) {
 
 // Copiar senha
 copiarSenha.addEventListener("click", () => {
-  const senha = document.getElementById("password").value;
+  const senha = password.value;
 
-  if (senha === "") return; // evita copiar vazio
+  if (senha === "") return; 
 
   navigator.clipboard.writeText(senha).then(() => {
     copiarSenha.textContent = "Senha copiada";
-    copiarSenha.style.opacity ="0.5"
+    copiarSenha.style.opacity = "0.5";
 
-    // Volta para "Copiar" depois de 2 segundos
     setTimeout(() => {
       copiarSenha.textContent = "Copiar";
-       copiarSenha.style.opacity ="1"
+      copiarSenha.style.opacity = "1";
     }, 2000);
   });
 });
+
 // Mostrar/ocultar senha
 document.getElementById("toggle-visibilidade").addEventListener("click", () => {
   const tipo = password.getAttribute("type");
   password.setAttribute("type", tipo === "password" ? "text" : "password");
 });
 
-// Força da senha (em tempo real)
+
 password.addEventListener("input", () => {
-  avaliarForcaSenha(password.value);
-});
-
-/*function avaliarForcaSenha(senha) {
-  const forcaBar = document.getElementById("forca-senha");
-  let forca = 0;
-
-  if (senha.length >= 6) forca++;
-  if (/[A-Z]/.test(senha)) forca++;
-  if (/[a-z]/.test(senha)) forca++;
-  if (/[0-9]/.test(senha)) forca++;
-  if (/[\W_]/.test(senha)) forca++;
-
-  let cor = "", texto = "";
-  switch (forca) {
-    case 0:
-    case 1:
-      cor = "red";
-      texto = "Fraca";
-      break;
-    case 2:
-    case 3:
-      cor = "orange";
-      texto = "Média";
-      break;
-    case 4:
-    case 5:
-      cor = "green";
-      texto = "Forte";
-      break;
+  if (typeof avaliarForcaSenha === "function") {
+    avaliarForcaSenha(password.value);
   }
-
-  forcaBar.textContent = `Força: ${texto}`;
-  forcaBar.style.color = cor;
-  forcaBar.style.marginTop = "50px"
-} */
+});

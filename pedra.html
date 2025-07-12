@@ -26,36 +26,37 @@
         <div class="game" >
             <div class="game-display" id="game">
                 <div class="fundo-game"></div>
-                <!-- Distribui as escolhas em forma de pentágono -->
-                <div class="choice amarelo" style="top: 5%; left: 43%; transform: translateY(-50%);">
+                
+                <div class="choice amarelo">
                     <div class="inner-circle">
                         <img id="tesoura" onclick=" select(0)" src="/image/icon-scissors.svg" alt="Tesoura">
                     </div>
                 </div>
 
-                <div class="choice azul" style="top: 18%; left: 59.5%;">
+                <div class="choice azul">
                     <div class="inner-circle">
                         <img id="papel" onclick=" select(1)" src="/image/icon-paper.svg" alt="Papel">
                     </div>
                 </div>
 
-                <div class="choice azul-claro" style="top: 18%; left: 26%;">
+                <div class="choice azul-claro">
                     <div class="inner-circle">
                         <img id="spock" onclick=" select(2)" src="/image/icon-spock.svg" alt="Spock">
                     </div>
                 </div>
+                
+                <div class="choice vermelho">
+                    <div class="inner-circle">
+                        <img id="pedra" onclick=" select(3)" src="/image/icon-rock.svg" alt="Pedra">
+                    </div>
+                </div>
 
-                <div class="choice roxo" style="top: 74%; left: 30%;">
+                <div class="choice roxo" >
                     <div class="inner-circle">
                         <img id="lagarto" onclick=" select(4)" src="/image/icon-lizard.svg" alt="Lagarto">
                     </div>
                 </div>
 
-                <div class="choice vermelho" style="top: 74%; left: 54%;">
-                    <div class="inner-circle">
-                        <img id="pedra" onclick=" select(3)" src="/image/icon-rock.svg" alt="Pedra">
-                    </div>
-                </div>
             </div>
             <!-- resultado do jogo -->
             <div class="game-result" id="game-result">
@@ -95,7 +96,7 @@
                 <p>Empates: <span id="draw-score">0</span></p>
                 <p>Rodadas: <span id="rodadas-score">0</span></p>
             </div>
-            <button id="resetscores">Reset Dados</button>
+            <button  id="resetScores">Reset Dados</button>
         </div>
 
         <button id="regrasBtn" class="rules-button">REGRAS</button>
@@ -117,9 +118,6 @@
                 <li>Pedra amassa Tesoura</li>
             </ul>
         </div>
-    </div>
-        </div>
-       
     </div>
 
     <script src="/src/javascript/tesoura.js"></script>

@@ -17,6 +17,10 @@ body{
     overflow: hidden;
 }
 
+button, i, p {
+  -webkit-tap-highlight-color: transparent; /*Para tira a "película azul" que aparece rapidamente ao tocar buttons, links, imagens com onclick, etc. */
+}
+
 .container{
     width: 420px;
     background-color: rgba(0, 0, 0, 0.2);

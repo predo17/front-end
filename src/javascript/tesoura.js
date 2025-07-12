@@ -1,202 +1,219 @@
-const frase = document.getElementById("frase");
-const jogador = document.getElementById("jogador");
-const pc = document.getElementById("pc");
-const botao = document.getElementById("botao");
-const game = document.getElementById("game");
-const gameResult = document.getElementById("game-result");
-const cores = ["amarelo", "azul", "azul-claro", "vermelho", "roxo"];
-//botão de regra, dados e de reset dados
-const regrasBtn = document.getElementById('regrasBtn');
-const regrasBox = document.getElementById('regrasBox');
-const dadosBtn = document.getElementById('dadosBtn');
-const dadosBox = document.getElementById('dadosBox');
-const fecharRegrasBtn = document.getElementById('fecharRegrasBtn');
-const fecharDadoaBtn = document.getElementById('fecharDadoaBtn');
-const resetScores = document.getElementById('resetscores')
+document.addEventListener('DOMContentLoaded', function () {
+  // Elementos do DOM
+  const gameDisplay = document.getElementById('game');
+  const gameResult = document.getElementById('game-result');
+  const playerResult = document.getElementById('player-result');
+  const pcResult = document.getElementById('pc-result');
+  const playerImg = document.getElementById('jogador');
+  const pcImg = document.getElementById('pc');
+  const fraseElement = document.getElementById('frase');
+  const playAgainBtn = document.getElementById('botao');
+  const roundCounter = document.getElementById('content-number');
+  const playerScoreElement = document.getElementById('player-score');
+  const pcScoreElement = document.getElementById('pc-score');
+  const drawScoreElement = document.getElementById('draw-score');
+  const rodadasScoreElement = document.getElementById('rodadas-score');
+  const resetScoresBtn = document.getElementById('resetScores');
+  const dadosBtn = document.getElementById('dadosBtn');
+  const dadosBox = document.getElementById('dadosBox');
+  const fecharDadosBtn = document.getElementById('fecharDadoaBtn');
+  const regrasBtn = document.getElementById('regrasBtn');
+  const regrasBox = document.getElementById('regrasBox');
+  const fecharRegrasBtn = document.getElementById('fecharRegrasBtn');
 
-regrasBtn.addEventListener('click', () => {
-  regrasBox.style.display = 'block';
-  setTimeout(() => {
-    regrasBox.classList.add('show');
-  }, 10);
-});
+  // Opções do jogo
+  const options = [
+    { name: 'Tesoura', beats: ['Papel', 'Lagarto'], icon: '/image/icon-scissors.svg' },
+    { name: 'Papel', beats: ['Pedra', 'Spock'], icon: '/image/icon-paper.svg' },
+    { name: 'Spock', beats: ['Tesoura', 'Pedra'], icon: '/image/icon-spock.svg' },
+    { name: 'Pedra', beats: ['Lagarto', 'Tesoura'], icon: '/image/icon-rock.svg' },
+    { name: 'Lagarto', beats: ['Spock', 'Papel'], icon: '/image/icon-lizard.svg' }
+  ];
 
-fecharRegrasBtn.addEventListener('click', () => {
-  regrasBox.classList.remove('show');
-  setTimeout(() => {
-    regrasBox.style.display = 'none';
-  }, 500);
-});
+  // Variáveis de estado
+  let playerScore = 0;
+  let pcScore = 0;
+  let drawScore = 0;
+  let rounds = 0;
+  let animationInterval;
+  let countdownInterval;
 
-dadosBtn.addEventListener('click', () => {
-  dadosBox.style.display = 'block';
-  setTimeout(() => {
-    dadosBox.classList.add('show');
-  }, 10);
-});
+  // Carregar pontuações salvas
+  loadScores();
 
-fecharDadoaBtn.addEventListener('click', () => {
-  dadosBox.classList.remove('show');
-  setTimeout(() => {
-    dadosBox.style.display = 'none';
-  }, 500);
-});
+  // Função para selecionar uma opção
+  window.select = function (index) {
+    const playerChoice = options[index];
+    const pcChoice = options[Math.floor(Math.random() * options.length)];
 
-const imagens = [
-  "/image/icon-scissors.svg",
-  "/image/icon-paper.svg",
-  "/image/icon-spock.svg",
-  "/image/icon-rock.svg",
-  "/image/icon-lizard.svg"
-];
+    // Esconder o jogo e mostrar a tela de resultado
+    gameDisplay.style.display = 'none';
+    gameResult.style.display = 'block';
+    playAgainBtn.style.display = 'none';
 
-let index = 0;
-let efeito;
-let escolhaJogador = 0;
-let rodadas = parseInt(localStorage.getItem('rodadas')) || 0;
-let playerWins = parseInt(localStorage.getItem('playerWins')) || 0;
-let pcWins = parseInt(localStorage.getItem('pcWins')) || 0;
-let draws = parseInt(localStorage.getItem('draws')) || 0;
-let rodadasws = parseInt(localStorage.getItem('rodadasws')) || 0;
+    // Iniciar contagem regressiva
+    fraseElement.textContent = '3'; // Começa em 3
 
-document.getElementById('content-number').textContent = rodadas;
-document.getElementById('player-score').textContent = playerWins;
-document.getElementById('pc-score').textContent = pcWins;
-document.getElementById('draw-score').textContent = draws;
-document.getElementById('rodadas-score').textContent = rodadasws;
+    // Efeito de embaralhamento
+    const efeito = setInterval(() => {
+      // Embaralhar jogador
+      const randomPlayer = Math.floor(Math.random() * options.length);
+      playerImg.src = options[randomPlayer].icon;
 
-function efeitoImagem() {
-  jogador.src = imagens[index];
-  pc.src = imagens[index];
+      // Embaralhar PC
+      const randomPc = Math.floor(Math.random() * options.length);
+      pcImg.src = options[randomPc].icon;
+    }, 70);
 
-  index++;
-  if (index === imagens.length) {
-    index = 0;
+    // Contagem regressiva
+    const tempo = setInterval(() => {
+      let contador = parseInt(fraseElement.textContent);
+      contador--;
+      fraseElement.textContent = contador;
+
+      if (contador === 0) {
+        clearInterval(tempo);
+        clearInterval(efeito);
+
+        // Mostrar escolhas reais
+        playerImg.src = playerChoice.icon;
+        pcImg.src = pcChoice.icon;
+
+        // Determinar o vencedor
+        const result = determineWinner(playerChoice, pcChoice);
+
+        // Atualizar interface
+        updateResultText(result, playerChoice, pcChoice);
+        updateScores(result);
+        playAgainBtn.style.display = 'block';
+
+        // Aplicar efeitos visuais
+        const innerPlayer = document.querySelector(".jogador-choice .inner-circle2");
+        const innerPc = document.querySelector(".pc-choice .inner-circle2");
+
+        // Animação do vencedor
+        if (result === 'win') {
+          innerPlayer.classList.add('winner');
+          innerPc.classList.add('winner');
+        }
+      }
+    }, 1000);
+  };
+
+  // Função para determinar o vencedor
+  function determineWinner(player, pc) {
+    if (player.name === pc.name) return 'draw';
+    if (player.beats.includes(pc.name)) return 'win';
+    return 'lose';
   }
-}
 
-efeito = setInterval(efeitoImagem, 100); 
+  // Função para atualizar o texto de resultado
+  function updateResultText(result, playerChoice, pcChoice) {
+    let frase = '';
 
-
-function select(opcao) {
-  escolhaJogador = opcao; 
-
-  game.style.display = "none";
-  gameResult.style.display = "block"; 
-  frase.textContent = '3';
-  frase.style.fontSize = '35px';
-  frase.style.marginBottom = '10px'
-  botao.style.display = 'none';
-
-  rodadas++;
-    localStorage.setItem('rodadas', rodadas);
-    document.getElementById('content-number').textContent = rodadas;
-
-  rodadasws++;
-    localStorage.setItem('rodadasws', rodadas);
-    document.getElementById('rodadas-score').textContent = rodadas;
-
-  document.querySelector('#player-result .inner-circle2').classList.remove('effect-behind');
-  document.querySelector('#pc-result .inner-circle2').classList.remove('effect-behind');
-
-
-  let tempo = setInterval(() => {
-    let conometro = parseInt(frase.textContent);
-    conometro--;
-    frase.textContent = conometro;
-
-    if (conometro === 0) {
-      clearInterval(tempo);
-      clearInterval(efeito);
-      jogador.src = imagens[opcao]; 
-
-      
-      const escolhaPc = Math.floor(Math.random() * 5);
-      pc.src = imagens[escolhaPc];
-      
-      frase.textContent = verificarResultado(escolhaJogador, escolhaPc);
-      botao.style.display = 'block';
-     
-      const innerPlayer = document.querySelector(".jogador-choice .inner-circle2");
-      const innerPc = document.querySelector(".pc-choice .inner-circle2");
-
-            innerPlayer.classList.remove(...cores);
-            innerPc.classList.remove(...cores);
-
-            innerPlayer.classList.add(cores[escolhaJogador]);
-            innerPc.classList.add(cores[escolhaPc]);
-
+    if (result === 'win') {
+      frase = `Você ganhou!<br>${playerChoice.name} ${getAction(playerChoice, pcChoice)} ${pcChoice.name}`;
+    } else if (result === 'lose') {
+      frase = `Você perdeu!<br>${pcChoice.name} ${getAction(pcChoice, playerChoice)} ${playerChoice.name}`;
+    } else {
+      frase = `Empate!<br>Ambos escolheram ${playerChoice.name}`;
     }
-  }, 1000);
-}
 
-resetScores.addEventListener('click', () => {
-
-  playerWins = 0;
-  pcWins = 0;
-  draws = 0;
-  rodadasws = 0;
-  rodadas = 0;
-
-  localStorage.setItem('playerWins', playerWins);
-  localStorage.setItem('pcWins', pcWins);
-  localStorage.setItem('draws', draws);
-  localStorage.setItem('rodadasws', rodadasws);
-  localStorage.setItem('rodadas', rodadas);
-
-  document.getElementById('player-score').textContent = playerWins;
-  document.getElementById('pc-score').textContent = pcWins;
-  document.getElementById('draw-score').textContent = draws;
-  document.getElementById('rodadas-score').textContent = rodadasws;
-  document.getElementById('content-number').textContent = rodadas;
-});
-
-function verificarResultado(player, pc) {
-  if (player === pc){
-     document.querySelector('#player-result .inner-circle2').classList.add('effect-behind');
-     document.querySelector('#pc-result .inner-circle2').classList.add('effect-behind');
-
-     draws++;
-     localStorage.setItem('draws', draws);
-     document.getElementById('draw-score').textContent = draws;
-
-     return "Empate!"
-  };
-
-  const venceDe = {
-    0: [1, 4], // tesoura vence papel e lagarto
-    1: [2, 3], // papel vence spock e pedra
-    2: [0, 3], // spock vence tesoura e pedra
-    3: [0, 4], // pedra vence tesoura e lagarto
-    4: [1, 2], // lagarto vence papel e spock
-  };
-
-  if (venceDe[player].includes(pc)) {
-    document.querySelector('#player-result .inner-circle2').classList.add('effect-behind');
-
-    playerWins++;
-    localStorage.setItem('playerWins', playerWins);
-    document.getElementById('player-score').textContent = playerWins;
-
-    return "Você Venceu!";
-  } else {
-    document.querySelector('#pc-result .inner-circle2').classList.add('effect-behind');
-
-    pcWins++;
-    localStorage.setItem('pcWins', pcWins);
-    document.getElementById('pc-score').textContent = pcWins;
-
-    return "Você Perdeu!";
+    fraseElement.innerHTML = frase;
   }
-}
 
+  // Função para obter a ação entre duas opções
+  function getAction(winner, loser) {
+    const actions = {
+      'Tesoura': { 'Papel': 'corta', 'Lagarto': 'decapita' },
+      'Papel': { 'Pedra': 'cobre', 'Spock': 'refuta' },
+      'Spock': { 'Tesoura': 'quebra', 'Pedra': 'vaporiza' },
+      'Pedra': { 'Lagarto': 'esmaga', 'Tesoura': 'amassa' },
+      'Lagarto': { 'Spock': 'envenena', 'Papel': 'come' }
+    };
 
-botao.addEventListener("click", () => {
-  window.location.reload();
+    return actions[winner.name][loser.name];
+  }
+
+  // Função para atualizar pontuações
+  function updateScores(result) {
+    rounds++;
+    roundCounter.textContent = rounds;
+
+    if (result === 'win') {
+      playerScore++;
+    } else if (result === 'lose') {
+      pcScore++;
+    } else {
+      drawScore++;
+    }
+
+    updateScoreDisplay();
+  }
+
+  // Função para atualizar a exibição das pontuações
+  function updateScoreDisplay() {
+    playerScoreElement.textContent = playerScore;
+    pcScoreElement.textContent = pcScore;
+    drawScoreElement.textContent = drawScore;
+    rodadasScoreElement.textContent = rounds;
+  }
+
+  // Função para salvar pontuações no localStorage
+  function saveScores() {
+    localStorage.setItem('playerScore', playerScore);
+    localStorage.setItem('pcScore', pcScore);
+    localStorage.setItem('drawScore', drawScore);
+    localStorage.setItem('rounds', rounds);
+  }
+
+  // Função para carregar pontuações do localStorage
+  function loadScores() {
+    playerScore = parseInt(localStorage.getItem('playerScore')) || 0;
+    pcScore = parseInt(localStorage.getItem('pcScore')) || 0;
+    drawScore = parseInt(localStorage.getItem('drawScore')) || 0;
+    rounds = parseInt(localStorage.getItem('rounds')) || 0;
+
+    roundCounter.textContent = rounds;
+    updateScoreDisplay();
+  }
+
+  // Event listeners
+  playAgainBtn.addEventListener('click', function () {
+    gameDisplay.style.display = 'block';
+    gameResult.style.display = 'none';
+  });
+
+  resetScoresBtn.addEventListener('click', function () {
+    playerScore = 0;
+    pcScore = 0;
+    drawScore = 0;
+    rounds = 0;
+
+    roundCounter.textContent = rounds;
+    updateScoreDisplay();
+    saveScores();
+  });
+
+  // Mostrar/ocultar caixa de dados
+  dadosBtn.addEventListener('click', function () {
+    dadosBox.style.opacity = '1';
+    dadosBox.style.visibility = 'visible';
+  });
+
+  fecharDadosBtn.addEventListener('click', function () {
+    dadosBox.style.opacity = '0';
+    dadosBox.style.visibility = 'hidden';
+  });
+
+  // Mostrar/ocultar caixa de regras
+  regrasBtn.addEventListener('click', function () {
+    regrasBox.style.opacity = '1';
+    regrasBox.style.visibility = 'visible';
+  });
+
+  fecharRegrasBtn.addEventListener('click', function () {
+    regrasBox.style.opacity = '0';
+    regrasBox.style.visibility = 'hidden';
+  });
 });
-
-
-
-
-
-
