@@ -15,8 +15,8 @@ body {
     color: white;
 }
 
-button, i {
-  -webkit-tap-highlight-color: transparent;
+button, i, img {
+    -webkit-tap-highlight-color: transparent;
 }
 
 .container-game {
@@ -144,6 +144,94 @@ button, i {
     box-shadow: 0 6px hsl(189, 58%, 35%);
 }
 
+.inner {
+    background-color: white;
+    position: relative;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.border-inner::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    right: -12px;
+    bottom: -12px;
+    border-radius: 50%;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+}
+
+/* Classes para as bordas coloridas EXTERNAS */
+.border-inner.tesoura::before {
+    background: linear-gradient(to bottom, hsl(39, 89%, 49%), hsl(40, 84%, 53%));
+    box-shadow: 0 6px hsl(28, 77%, 44%);
+    opacity: 1;
+}
+
+.border-inner.papel::before {
+    background: linear-gradient(to bottom, hsl(230, 89%, 62%), hsl(230, 89%, 65%));
+    box-shadow: 0 6px hsl(230, 65%, 46%);
+    opacity: 1;
+}
+
+.border-inner.spock::before {
+    background: linear-gradient(to bottom, hsl(189, 59%, 53%), hsl(189, 58%, 57%));
+    box-shadow: 0 6px hsl(189, 58%, 35%);
+    opacity: 1;
+}
+
+.border-inner.pedra::before {
+    background: linear-gradient(to bottom, hsl(349, 71%, 52%), hsl(349, 70%, 56%));
+    box-shadow: 0 6px hsl(349, 62%, 39%);
+    opacity: 1;
+}
+
+.border-inner.lagarto::before {
+    background: linear-gradient(to bottom, hsl(261, 73%, 60%), hsl(261, 72%, 63%));
+    box-shadow: 0 6px hsl(261, 51%, 44%);
+    opacity: 1;
+}
+
+/* Efeito do vencedor (agora na borda externa) */
+.border-inner.winner::after {
+    content: '';
+    position: absolute;
+    top: -24px;
+    left: -24px;
+    right: -24px;
+    bottom: -24px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    z-index: -2;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1);
+        opacity: 0.2;
+    }
+
+    100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+}
+
 .game-result {
     display: none;
     width: 100%;
@@ -190,46 +278,6 @@ button, i {
     flex-direction: column;
     align-items: center;
     width: 200px;
-}
-
-.inner-circle2 {
-    background-color: white;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: inset 0 8px rgba(0, 0, 0, 0.2);
-}
-
-.inner-circle2 img {
-    width: 60px;
-    height: 60px;
-}
-
-.effect-behind {
-    position: relative;
-}
-
-.effect-behind::before {
-    content: '';
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    background-color: rgba(255, 255, 255, 0.03);
-    border-radius: 50%;
-    z-index: -1;
-}
-
-.effect-behind::after {
-    content: '';
-    position: absolute;
-    width: 250px;
-    height: 250px;
-    background-color: rgba(255, 255, 255, 0.02);
-    border-radius: 50%;
-    z-index: -2;
 }
 
 .game-predict {
@@ -305,19 +353,17 @@ button, i {
     opacity: 0;
     visibility: hidden;
     transition: 0.5s ease-in-out;
-
-    /* Responsivo */
     width: 90%;
     max-width: 400px;
     max-height: 90vh;
     overflow-y: auto;
     overscroll-behavior: contain;
-    scrollbar-width: thin; /* Firefox */
+    scrollbar-width: thin;
 }
 
-/* Scroll personalizado para WebKit (Chrome, Safari) */
+/* Scroll personalizado para WebKit */
 .rules-box::-webkit-scrollbar {
-    width: 6px;
+    width: 3px;
 }
 
 .rules-box::-webkit-scrollbar-thumb {
